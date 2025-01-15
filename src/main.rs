@@ -1,5 +1,5 @@
 mod objects;
-mod systems;
+mod plugins;
 
 use bevy::prelude::*;
 use std::ops::Neg;
