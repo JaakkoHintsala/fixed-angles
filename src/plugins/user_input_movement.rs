@@ -7,7 +7,7 @@ pub struct UserInputMovementPlugin;
 
 impl Plugin for UserInputMovementPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Update, (move_with_user_input, flip_sprites ));
+        app.add_systems(Update, (move_with_user_input, flip_sprites));
     }
 }
 
