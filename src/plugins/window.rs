@@ -10,7 +10,7 @@ pub struct WindowHandlerPlugin;
 impl Plugin for WindowHandlerPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(Update, on_resize_system);
-        app.add_systems(StateTransition, (resize_on_state_change,));
+        //app.add_systems(StateTransition, (resize_on_state_change,));
     }
 }
 
