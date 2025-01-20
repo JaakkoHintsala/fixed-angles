@@ -38,7 +38,7 @@ fn setup(
             area,
             Transform::from_xyz(area.get_center_coords().x, area.get_center_coords().y, 0.0),
             Sprite {
-                custom_size: Some(area.get_width_and_height_scaled(window.width(),window.height() )),
+                custom_size: Some(area.get_width_and_height()),
                 image: area.get_back_ground_picture(&asset_server),
                 anchor: bevy::sprite::Anchor::Center,
                 ..default()

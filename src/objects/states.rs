@@ -5,18 +5,14 @@ use bevy::{
 };
 use strum_macros::{Display, EnumDiscriminants, EnumIter};
 
-
-#[derive(Debug, Clone, Copy, Default, Eq, PartialEq, Hash, States, Display, EnumIter, Component)]
+#[derive(
+    Debug, Clone, Copy, Default, Eq, PartialEq, Hash, States, Display, EnumIter, Component,
+)]
 pub enum AreaState {
-    #[default]
     StartingArea,
     Castle,
+    #[default]
     Forest,
-}
-
-pub struct WidthAndHeight {
-    width: f32,
-    height: f32,
 }
 
 impl AreaState {
@@ -52,6 +48,25 @@ impl AreaState {
         )
     }
 
+    pub fn calculate_scale_by_window(&self, window_width: f32, window_height: f32) -> f32 {
+        let ratio_of_max = window_width / window_height;
+        let unscaled = self.get_width_and_height();
+        let ratio_of_unscaled = unscaled.x / unscaled.y;
+        // dbg!(window_width);
+        // dbg!(window_height);
+        // dbg!(unscaled.x);
+        // dbg!(unscaled.y);
+        if ratio_of_max > ratio_of_unscaled {
+            let ret_first = unscaled.y / window_height;
+            // dbg!(ret_first)
+            ret_first
+        } else {
+            let ret_sec = unscaled.x / window_width;
+            // dbg!(ret_sec)
+            ret_sec
+        }
+    }
+
     pub fn get_width_and_height(&self) -> Vec2 {
         match self {
             AreaState::StartingArea => Vec2 { x: 599.0, y: 900.0 },
@@ -61,26 +76,6 @@ impl AreaState {
             },
             AreaState::Forest => Vec2 { x: 450.0, y: 300.0 },
         }
-    }
-
-    pub fn get_width_and_height_scaled(&self, max_width: f32, max_height: f32) -> Vec2 {
-        let ratio_of_max = max_width / max_height;
-        let unscaled = self.get_width_and_height();
-        let ratio_of_unscaled = unscaled.x / unscaled.y;
-
-        if ratio_of_max > ratio_of_unscaled {
-            Vec2 {
-                x: unscaled.x * (max_height / unscaled.y),
-                y: max_height,
-            }
-        } else {
-            Vec2 {
-                x: max_width,
-                y: unscaled.y * (max_width / unscaled.x),
-            }
-        }
-
-
     }
 
     pub fn get_center_coords(&self) -> Vec2 {
